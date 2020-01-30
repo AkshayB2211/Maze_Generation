@@ -9,7 +9,7 @@ HEIGHT = 480
 FPS = 10
 
 size = 48
-cols = WIDTH//size
+cols = HEIGHT//size
 rows = WIDTH//size
 
 # define colors
@@ -101,7 +101,7 @@ def main():
 		for j in range(cols):
 			grid[i].append(Cell(i*size, j*size))
 
-	current = grid[0][0]			# grid[col][row]
+	current = grid[0][0]			# grid[col][row], it flips on canvas
 	current.visited = True
 	stack = deque()
 	stack.append(current)			# stack for back tracking

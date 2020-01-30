@@ -1,11 +1,12 @@
 
 import pygame
 import random
+from collections import deque
 
 # game constants
 WIDTH = 480
 HEIGHT = 480
-FPS = 1
+FPS = 10
 
 size = 48
 cols = WIDTH//size
@@ -102,9 +103,8 @@ def main():
 
 	current = grid[0][0]			# grid[col][row]
 	current.visited = True
-	# current = grid[5][5]
-	# next_ = grid[5][4]
-	# current.break_walls(next_)
+	stack = deque()
+	stack.append(current)			# stack for back tracking
 
 	# Game loop
 	running = True
@@ -117,12 +117,17 @@ def main():
 
 		# Update
 		next_ = next_cell(current, grid)
-		if next_:
-			print(current.x, current.y)
-			print(next_.x, next_.y)
+		if next_ is None:
+			try:
+				current = stack.pop()
+			except:
+				pass
+		else:
 			current.break_walls(next_)
 			current = next_
 			current.visited = True
+			stack.append(current)
+
 
 		# Draw / render
 		screen.fill(WHITE)
